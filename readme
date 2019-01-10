@@ -1,1 +1,61 @@
-Python code for Delaunay Triangulationa nd Voronoi Generation
+
+Analysis of Triangulation and Edge-Flipping:
+
+The edge flipping algorithm discussed in class is slow triangulation algorithm as it has to go through every single edge in the triangulation and check for Delaunay’s condition. The pseudocode of the algorithm would be as follows:
+
+ 
+
+The complexity of this algorithm would be O(N^2). Therefore, instead of first computing the triangulation and then computing Delaunay triangulation through edge flipping, the algorithm implemented in this program computes Delaunay triangulation by sequentially adding points and flipping edge as the triangulation is being computed. The following steps explain how the program works (Triangulation and Flipping):
+
+Let S be a set of points 
+1.	Select a starting point So 
+2.	Compute the center of gravity of the points
+3.	Sort the points according to the distance from the center of gravity
+4.	Find the point Sj closest to the center of gravity 
+5.	Find the point Sk that creates the smallest circumcircle with Sj and record the center of this circle
+6.	Order the points [Sj, Sk, center of gravity] counter clock-wise
+7.	Sort the points again according to distance from the center of the circumcircle computed in the earlier step.
+8.	Sequentially add new points to the system and construct the triangles while maintaining counter clock-wise direction. 
+9.	During this, non-overlapping triangles are created continuously. Then, check the adjacent pairs of triangles at each step, and flip the edges to meet the Delaunay requirement. 
+
+To be very Brief this algorithm constructs Delaunay triangles by the following steps:
+1.	Make the first Delaunay triangles
+2.	Add a point
+3.	Triangulate again
+4.	Check the Delaunay condition for the adjacent triangles
+5.	Flip the edges
+6.	Repeat Step 2
+
+The following algorithm would be an NlogN algorithm. This is because in order to add points, we need to go through a list of N size and in-order to figure out if the edges involved are illegal, we need to perform a series of lookup and setter operations which would take LogN time with the help of a graph implementation.
+
+Data Structures Analysis:
+
+Although I have stated above that the algorithm could be implemented in NlogN with a graph, because of time constraints and other commitments, I have not implemented a graph and due to this, the implemented algorithm in my program is O(N^2) as the program has to go through all the edges in a list for adding a new point .
+
+add_new_point(point):
+	//code
+	//add()
+
+Add():
+	//Code
+	For I in Edges:
+		//Code
+	//Code 
+
+The algorithm was mainly implemented with the help of edges and faces. The edges and faces were linked using a Map Data structure. The map contains edges and faces in this format: {[Edge]:[Faces]}. Everytime the program had to find a edge or face connected, the map was used to serach and retrieve.Next, instead of adding vertices of triangles to the triangle list, the indices of points in the points list were stored in a list of triangles. The edges were also tracked this way in an edge list. There are Vertex, Edge and Face classes still present in my program from part-01 and I have kept them for later use during Voronoi implementation. However, these classes have not been used for this program currently.  
+
+Testing:
+
+ Here is a sample output of the program:
+
+ 
+
+
+ 
+
+
+
+
+ 
+
+ 
